@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dotodo — Главная</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Общий фон страницы -->
+    <div class="page-wrapper">
+
+        <!-- HEADER — точно как в Figma (1440x80, padding 120x20, gap 872, фон --background, граница Border) -->
+        <header class="header">
+            <div class="header-content">
+                <a href="#" class="logo-text">Dotodo</a>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline">Войти</button>
+                    <button class="btn btn-primary">Регистрация</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- HERO ФРЕЙМ — точно как в Figma (800x279, #EFF2EB 50%, radius 16) -->
+        <section class="hero-frame">
+            <div class="hero-content">
+                <h1 class="hero-title">Dotodo — to-do, to-do!</h1>
+                <p class="hero-subtitle">Организуйте ваши задачи, ставьте цели, отслеживайте прогресс и достигайте результатов быстрее с Dotodo</p>
+                <button class="btn btn-primary hero-cta">Начать</button>
+            </div>
+        </section>
+
+        <!-- FEATURES ФРЕЙМ — точно как в Figma (1440x312, #EFF2EB 50%, radius 0) -->
+        <section class="features-frame">
+            <div class="container">
+                <h2 class="section-title">Всё, что нужно для порядка</h2>
+                <div class="features-grid">
+    
+                <!-- Карточка 1 -->
+                <div class="feature-card">
+                    <img src="images/list.jpg" alt="Умные списки" class="feature-icon-img">
+                    <h3 class="feature-title">Умные списки</h3>
+                    <p class="feature-desc">Создавай задачи, ставь дедлайны, назначай приоритеты</p>
+                </div>
+
+                <!-- Карточка 2 -->
+                <div class="feature-card">
+                    <img src="images/graf.webp" alt="Наглядная статистика" class="feature-icon-img">
+                    <h3 class="feature-title">Наглядная статистика</h3>
+                    <p class="feature-desc">Следи за своей продуктивностью с помощью удобных графиков</p>
+                </div>
+
+                <!-- Карточка 3 -->
+                <div class="feature-card">
+                    <img src="images/kalend.jpg" alt="Календарь задач" class="feature-icon-img">
+                    <h3 class="feature-title">Календарь задач</h3>
+                    <p class="feature-desc">Все твои дела на одном экране с удобным календарём</p>
+                </div>
+
+            </div>
+            </div>
+        </section>
+
+        <!-- FOOTER — точно как в Figma (1440x120, #EFF2EB 50%, spacing 727) -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <a href="#" class="logo-text">Dotodo</a>
+                    <p class="copyright">© 2026 Dotodo. Все права защищены.</p>
+                </div>
+                <div class="footer-right">
+                    <a href="#" class="footer-link">Политика конфиденциальности</a>
+                    <a href="#" class="footer-link">Условия использования</a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
