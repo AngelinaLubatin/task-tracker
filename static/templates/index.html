@@ -17,8 +17,10 @@
             <div class="header-content">
                 <a href="#" class="logo-text">Dotodo</a>
                 <div class="auth-buttons">
-                    <button class="btn btn-outline">Войти</button>
-                    <button class="btn btn-primary">Регистрация</button>
+                    <!-- Ссылка на страницу входа -->
+                    <a href="login.html" class="btn btn-outline">Войти</a>
+                    <!-- Ссылка на страницу регистрации -->
+                    <a href="register.html" class="btn btn-primary">Регистрация</a>
                 </div>
             </div>
         </header>
@@ -28,7 +30,8 @@
             <div class="hero-content">
                 <h1 class="hero-title">Dotodo — to-do, to-do!</h1>
                 <p class="hero-subtitle">Организуйте ваши задачи, ставьте цели, отслеживайте прогресс и достигайте результатов быстрее с Dotodo</p>
-                <button class="btn btn-primary hero-cta">Начать</button>
+                <!-- Ведет на регистрацию -->
+                <a href="register.html" class="btn btn-primary hero-cta">Начать</a>
             </div>
         </section>
 
@@ -38,26 +41,26 @@
                 <h2 class="section-title">Всё, что нужно для порядка</h2>
                 <div class="features-grid">
     
-                <!-- Карточка 1 -->
-                <div class="feature-card">
+                <!-- Карточка 1 → Задачи -->
+                <a href="tasks.html" class="feature-card">
                     <img src="images/list.jpg" alt="Умные списки" class="feature-icon-img">
                     <h3 class="feature-title">Умные списки</h3>
                     <p class="feature-desc">Создавай задачи, ставь дедлайны, назначай приоритеты</p>
-                </div>
+                </a>
 
-                <!-- Карточка 2 -->
-                <div class="feature-card">
+                <!-- Карточка 2 → Статистика -->
+                <a href="stats.html" class="feature-card">
                     <img src="images/graf.webp" alt="Наглядная статистика" class="feature-icon-img">
                     <h3 class="feature-title">Наглядная статистика</h3>
                     <p class="feature-desc">Следи за своей продуктивностью с помощью удобных графиков</p>
-                </div>
+                </a>
 
-                <!-- Карточка 3 -->
-                <div class="feature-card">
+                <!-- Карточка 3 → Календарь -->
+                <a href="calendar.html" class="feature-card">
                     <img src="images/kalend.jpg" alt="Календарь задач" class="feature-icon-img">
                     <h3 class="feature-title">Календарь задач</h3>
                     <p class="feature-desc">Все твои дела на одном экране с удобным календарём</p>
-                </div>
+                </a>
 
             </div>
             </div>
@@ -79,6 +82,6 @@
 
     </div>
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="charts.js"></script>
 </body>
 </html>

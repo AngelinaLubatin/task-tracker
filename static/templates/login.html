@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dotodo — Вход</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-page">
+
+    <div class="page-wrapper">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <a href="#" class="logo-text">Dotodo</a>
+                <div class="auth-buttons">
+                    <!-- Ссылка на страницу входа -->
+                    <a href="login.html" class="btn btn-outline">Войти</a>
+                    <!-- Ссылка на страницу регистрации -->
+                    <a href="register.html" class="btn btn-primary">Регистрация</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ОСНОВНОЙ КОНТЕНТ -->
+        <main class="auth-container">
+            <div class="auth-card">
+
+                <!-- ЗАГОЛОВОК "ДОБРО ПОЖАЛОВАТЬ!" -->
+                <h2 class="auth-welcome">Добро пожаловать!</h2>
+
+                <!-- Табы: теперь это ссылки -->
+                <div class="auth-tabs">
+                    <!-- Ссылка на текущую страницу (Вход) -->
+                    <a href="login.html" class="tab-btn active">Вход</a>
+                    <!-- Ссылка на страницу регистрации -->
+                    <a href="register.html" class="tab-btn">Регистрация</a>
+                </div>
+
+                <!-- Форма -->
+                <form class="auth-form" method="POST" action="/login">
+                    <div class="form-group">
+                        <label for="email">Почта</label>
+                        <input type="email" id="email" name="email" placeholder="example@gmail.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Пароль</label>
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    </div>
+
+                    <div class="form-options">
+                        <a href="#" class="forgot-password">Забыли пароль?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary auth-submit">Войти</button>
+                </form>
+
+                <p class="auth-footer">
+                    Нет аккаунта? <a href="register.html">Зарегистрироваться</a>
+                </p>
+
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <a href="#" class="logo-text">Dotodo</a>
+                    <p class="copyright">© 2026 Dotodo. Все права защищены.</p>
+                </div>
+                <div class="footer-right">
+                    <a href="#" class="footer-link">Политика конфиденциальности</a>
+                    <a href="#" class="footer-link">Условия использования</a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <script src="charts.js"></script>
+</body>
+</html>

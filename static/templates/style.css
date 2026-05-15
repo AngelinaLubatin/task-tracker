@@ -57,6 +57,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
+    overflow: visible !important;
 }
 
 .header-content {
@@ -85,6 +86,13 @@ body {
     transition: all 0.3s ease;
     border: none;
     outline: none;
+    
+    /* 👇 Добавь эти строки, чтобы ссылка не отличалась от кнопки */
+    text-decoration: none; /* Убирает подчеркивание */
+    color: inherit;        /* Запрещает синий цвет, берет цвет от родителя/класса */
+    display: inline-flex;  /* Чтобы отступы и размеры работали как у <button> */
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-outline {
@@ -239,7 +247,7 @@ body {
 /* ===== FOOTER — точно как в Figma: H=120, bg #EFF2EB 50%, no radius ===== */
 .footer {
     height: 120px;
-    background: rgba(239, 242, 235, 0.5);
+    background: rgba(239, 242, 235);
     border-top: 1px solid var(--border);
     padding: 0 120px; /* Как в header */
     display: flex;
@@ -294,4 +302,835 @@ body {
     }
     .footer-content { flex-direction: column; text-align: center; }
     .footer-right { flex-direction: column; gap: 12px; }
+}
+
+/* ===== СТРАНИЦА ВХОДА / РЕГИСТРАЦИИ ===== */
+.login-page .auth-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: rgb(255, 255, 255, 0.8);; /* Однотонный фон страницы */
+}
+
+.login-page .auth-card {
+    /* Фон как в Figma: Background Карточки с прозрачностью 80% */
+    background: rgba(239, 242, 235, 0.8);
+    /* Радиус всех углов: 24px */
+    border-radius: 24px;
+    /* Padding: 32px со всех сторон */
+    padding: 32px;
+    width: 100%;
+    max-width: 480px; /* Как в Figma */
+    box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+    /* Выравнивание контента по центру */
+    display: flex;
+    flex-direction: column;
+    gap: 24px; /* Gap между элементами */
+}
+
+/* Заголовок "Добро пожаловать!" */
+.auth-welcome {
+    font-size: var(--font-h2);
+    font-weight: 700;
+    text-align: center;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 8px;
+    background: rgba(239, 242, 235, 0.5);
+    border-radius: 8px;
+    padding: 4px;
+}
+
+/* Стили для табов (работают и для button, и для a) */
+.tab-btn {
+    display: flex;             /* Центрируем текст */
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-size: var(--font-caption);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-secondary);
+    text-decoration: none;     /* Убираем подчеркивание ссылки */
+}
+
+.tab-btn:hover {
+    background: rgba(234, 126, 93, 0.1); /* Лёгкий оранжевый фон */
+    color: var(--primary);
+}
+
+.tab-btn.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 2px 8px rgba(234, 126, 93, 0.3);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: var(--font-caption);
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.form-group input {
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: var(--font-body);
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(234, 126, 93, 0.1);
+}
+
+.form-options {
+    text-align: right;
+}
+
+.forgot-password {
+    font-size: var(--font-caption);
+    color: var(--primary);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.forgot-password:hover {
+    opacity: 0.8;
+}
+
+.auth-submit {
+    width: 100%;
+    padding: 14px;
+    font-size: var(--font-body);
+    font-weight: 500;
+}
+
+.auth-footer {
+    margin-top: 8px;
+    text-align: center;
+    font-size: var(--font-caption);
+    color: var(--text-secondary);
+}
+
+.auth-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Футер на странице входа — с прозрачным фоном */
+.login-page .footer {
+    background: rgba(239, 242, 235);
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+    .login-page .auth-card {
+        padding: 24px 20px;
+    }
+    .auth-welcome {
+        font-size: 28px;
+    }
+}
+
+/* Сообщение об ошибке под полем */
+.error-msg {
+    color: #BA544D;
+    font-size: 13px;
+    margin-top: 6px;
+    font-weight: 500;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* ===== DASHBOARD — ИСПРАВЛЕНИЕ ВЫРАВНИВАНИЯ ===== */
+
+/* 1. Убираем лишний padding у шапки дашборда (там уже есть .container) */
+body.dashboard-page .header {
+    padding: 0; /* Отменяем общие 120px, т.к. .container внутри уже даёт 20px */
+}
+
+/* 2. Растягиваем .container в шапке на всю ширину для правильного выравнивания */
+body.dashboard-page .header .container {
+    max-width: 1440px;
+    padding: 0 120px; /* Теперь ровно 120px как в макете */
+}
+
+/* 3. Фон дашборда: иллюстрация + белый слой 80% */
+body.dashboard-page .page-wrapper {
+    background-image: url('images/fon.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body.dashboard-page .page-wrapper::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* 4. Контент дашборда: выравниваем по шапке */
+body.dashboard-page .dashboard-container {
+    position: relative;
+    z-index: 1;
+    padding: 40px 0 60px;
+}
+
+body.dashboard-page .dashboard-container .container {
+    max-width: 1440px;
+    padding: 0 120px; /* Точно как в шапке */
+}
+
+/* 5. Стили блоков дашборда (статистика, график, задачи) */
+.dashboard-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: var(--text-primary);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: rgba(239, 242, 235, 0.5);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+}
+
+.stat-value { font-size: 36px; font-weight: 700; margin-bottom: 4px; }
+.stat-label { font-size: 14px; color: var(--text-secondary); }
+
+.chart-card, .tasks-card {
+    background: rgba(239, 242, 235, 0.5);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.chart-title, .tasks-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.chart-bars {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 150px;
+    gap: 12px;
+}
+
+.bar-group { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; }
+.bar { width: 100%; max-width: 40px; background: var(--primary); border-radius: 6px 6px 0 0; }
+.bar-label { font-size: 12px; color: var(--text-secondary); }
+
+.tasks-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.tasks-link { font-size: 14px; color: var(--primary); text-decoration: none; font-weight: 500; }
+
+.task-list { list-style: none; padding: 0; margin: 0; }
+.task-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.task-item:last-child { border-bottom: none; }
+
+.task-checkbox {
+    width: 20px; height: 20px; border: 2px solid var(--border);
+    border-radius: 6px; cursor: pointer; flex-shrink: 0;
+}
+.task-checkbox.checked {
+    background: var(--primary); border-color: var(--primary); position: relative;
+}
+.task-checkbox.checked::after {
+    content: '✓'; color: white; font-size: 12px;
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+
+.task-name { flex: 1; font-size: 15px; }
+.task-item.completed .task-name { text-decoration: line-through; color: var(--text-secondary); }
+.task-date { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); }
+.date-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* Адаптив */
+@media (max-width: 900px) {
+    body.dashboard-page .header .container,
+    body.dashboard-page .dashboard-container .container {
+        padding: 0 24px;
+    }
+    .stats-grid { grid-template-columns: 1fr; }
+}
+/* ===== DASHBOARD — ЧИСТКА ДУБЛЕЙ + ГРАФИК ===== */
+/* ===== DASHBOARD — ПОЛНЫЙ РАБОЧИЙ КОД ===== */
+
+/* Фон: иллюстрация + белый слой 80% */
+body.dashboard-page .page-wrapper {
+    background-image: url('images/fon.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
+
+body.dashboard-page .page-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 0;
+}
+
+/* Контент выше фона */
+body.dashboard-page .header,
+body.dashboard-page .dashboard-container,
+body.dashboard-page .footer {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Шапка и контент — одинаковые отступы */
+body.dashboard-page .header,
+body.dashboard-page .dashboard-container {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 120px !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+    position: relative;  /* ← ЭТУ СТРОЧКУ ДОБАВИТЬ */
+    z-index: 100; 
+}
+
+body.dashboard-page .header .container,
+body.dashboard-page .dashboard-container .container {
+    max-width: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+/* Профиль пользователя */
+body.dashboard-page .user-profile {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+body.dashboard-page .user-avatar {
+    width: 32px !important;
+    height: 32px !important;
+    background: var(--primary) !important;
+    color: white !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+}
+
+body.dashboard-page .user-name {
+    font-weight: 500 !important;
+    color: var(--text-secondary) !important;
+    font-size: 14px !important;
+}
+
+body.dashboard-page .dropdown-arrow {
+    font-size: 10px !important;
+    color: var(--text-secondary) !important;
+    margin-left: 0px !important;
+    display: inline-block !important;
+}
+
+.dropdown-arrow::after {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2375786F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    margin-left: 4px;
+}
+
+/* Заголовок */
+.dashboard-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: var(--text-primary);
+    margin-top: 40px; 
+}
+
+/* Статистика */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: rgba(239, 242, 235, 0.5);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+}
+
+.stat-value { font-size: 36px; font-weight: 700; margin-bottom: 4px; }
+.stat-label { font-size: 14px; color: var(--text-secondary); }
+
+/* Карточки */
+.chart-card, .tasks-card {
+    background: rgba(239, 242, 235, 0.8) !important;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.chart-title, .tasks-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* ===== ГРАФИК — РАБОЧИЙ ===== */
+body.dashboard-page .chart-bars {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+    height: 180px !important;
+    gap: 16px !important;
+    padding: 20px 10px 0;
+}
+
+body.dashboard-page .bar-group {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex: 1 !important;
+    max-width: 60px;
+}
+
+/* Базовые стили столбцов */
+body.dashboard-page .bar {
+    width: 100% !important;
+    max-width: 48px !important;
+    background: rgb(234, 126, 93, 0.5) !important;
+    border-radius: 6px 6px 0 0 !important;
+    opacity: 1 !important;
+    transition: opacity 0.3s;
+    height: auto !important; /* Сбрасываем все height из CSS */
+}
+
+body.dashboard-page .bar:hover {
+    opacity: 0.8 !important;
+}
+
+/* === КЛАССЫ ВЫСОТЫ (вместо inline-стилей) === */
+body.dashboard-page .bar-pn { height: calc(180px * 0.60) !important; }
+body.dashboard-page .bar-vt { height: calc(180px * 0.40) !important; }
+body.dashboard-page .bar-sr { height: calc(180px * 0.80) !important; }
+body.dashboard-page .bar-cht { height: calc(180px * 0.50) !important; }
+body.dashboard-page .bar-pt { height: calc(180px * 0.70) !important; }
+body.dashboard-page .bar-sb { height: calc(180px * 0.25) !important; }
+body.dashboard-page .bar-vs { height: calc(180px * 0.30) !important; }
+
+body.dashboard-page .bar-label {
+    font-size: 12px !important;
+    color: var(--text-secondary) !important;
+    text-align: center;
+}
+
+/* Задачи */
+.tasks-header { 
+    display: flex !important; 
+    justify-content: space-between !important; 
+    align-items: center !important; 
+    margin-bottom: 16px; 
+}
+.tasks-link { 
+    font-size: 14px; 
+    color: var(--primary); 
+    text-decoration: none; 
+    font-weight: 500; 
+}
+
+.task-list { list-style: none; padding: 0; margin: 0; }
+.task-item {
+    display: flex; 
+    align-items: center; 
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.task-item:last-child { border-bottom: none; }
+
+.task-checkbox {
+    width: 20px; 
+    height: 20px; 
+    border: 2px solid var(--border);
+    border-radius: 6px; 
+    cursor: pointer; 
+    flex-shrink: 0;
+}
+.task-checkbox.checked {
+    background: var(--primary); 
+    border-color: var(--primary); 
+    position: relative;
+}
+.task-checkbox.checked::after {
+    content: '✓'; 
+    color: white; 
+    font-size: 12px;
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
+
+.task-name { flex: 1; font-size: 15px; }
+.task-item.completed .task-name { 
+    text-decoration: line-through; 
+    color: var(--text-secondary); 
+}
+.task-date { 
+    display: flex; 
+    align-items: center; 
+    gap: 6px; 
+    font-size: 13px; 
+    color: var(--text-secondary); 
+}
+.date-dot { 
+    width: 8px; 
+    height: 8px; 
+    border-radius: 50%; 
+}
+
+/* Футер */
+body.dashboard-page .footer {
+    background: rgba(239, 242, 235, 0.9) !important;
+    border-top: 1px solid var(--border) !important;
+}
+
+/* Адаптив */
+@media (max-width: 1024px) {
+    body.dashboard-page .header,
+    body.dashboard-page .dashboard-container {
+        padding: 0 40px !important;
+    }
+}
+@media (max-width: 768px) {
+    body.dashboard-page .header,
+    body.dashboard-page .dashboard-container {
+        padding: 0 20px !important;
+    }
+    body.dashboard-page .chart-bars {
+        height: 140px !important;
+    }
+    .stats-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== ВЫПАДАЮЩЕЕ МЕНЮ ПОЛЬЗОВАТЕЛЯ ===== */
+/* Профиль должен быть выше карточек */
+/* Оверлей (занимает весь экран, выше контента) */
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: transparent; /* Можно rgba(0,0,0,0.05) если хочешь лёгкое затемнение */
+    z-index: 9000 !important;
+    cursor: default;
+}
+.menu-overlay.active { display: block; }
+
+/* Профиль остаётся обычным */
+.user-profile {
+    position: relative;
+    cursor: pointer;
+}
+/* Меню теперь позиционируется относительно окна браузера */
+.user-dropdown {
+    display: none;
+    position: fixed !important; /* Выходит из контекста шапки */
+    top: 80px;                  /* Ровно под шапкой (высота header = 80px) */
+    right: 120px;               /* Отступ справа как в макете */
+    width: 220px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    padding: 8px 0;
+    z-index: 9999 !important;   /* Теперь точно выше всего */
+    border: 1px solid var(--border);
+}
+
+.user-dropdown.show {
+    display: block !important;
+    animation: fadeIn 0.2s ease;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+    background: var(--background); /* Легкий серый фон при наведении */
+}
+
+.dropdown-item .icon {
+    font-size: 16px;
+    opacity: 0.7;
+}
+
+/* Разделитель */
+.dropdown-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 4px 0;
+}
+
+/* Кнопка Выйти */
+.dropdown-item.logout {
+    color: var(--danger); /* Красный цвет */
+}
+
+.dropdown-item.logout:hover {
+    background: rgba(186, 84, 77, 0.05);
+}
+.dropdown-item svg {
+    opacity: 0.6; /* Иконки чуть бледнее текста */
+    flex-shrink: 0; /* Чтобы не сжимались */
+}
+
+.dropdown-item:hover svg {
+    opacity: 1; /* При наведении ярче */
+}
+
+.dropdown-item.logout svg {
+    stroke: var(--danger); /* Красная иконка для Выйти */
+}
+
+/* ===== КЛИКАБЕЛЬНЫЕ КАРТОЧКИ НА ГЛАВНОЙ ===== */
+.feature-card {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block; /* Чтобы вся область карточки была кликабельной */
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+/* Убираем стандартное подчёркивание ссылок внутри карточек */
+.feature-card .feature-title,
+.feature-card .feature-desc {
+    pointer-events: none;
+}
+
+
+/* ===== СТРАНИЦА ЗАДАЧ ===== */
+
+/* Заголовок с кнопкой */
+.tasks-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+/* Поиск */
+.tasks-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 20px;
+    max-width: 400px;
+}
+
+.tasks-search svg { stroke: var(--text-secondary); }
+
+.tasks-search input {
+    border: none; background: transparent; font-size: 14px;
+    outline: none; width: 100%; color: var(--text-primary);
+}
+
+.tasks-search input::placeholder { color: var(--text-secondary); }
+
+/* Фильтры */
+.tasks-filters { display: flex; gap: 8px; margin-bottom: 24px; }
+
+.filter-btn {
+    padding: 8px 16px; border: none; background: rgba(239, 242, 235, 0.6);
+    border-radius: 20px; font-size: 14px; font-weight: 500;
+    color: var(--text-secondary); cursor: pointer; transition: all 0.2s;
+}
+
+.filter-btn:hover { background: rgba(234, 126, 93, 0.1); color: var(--primary); }
+.filter-btn.active { background: var(--primary); color: white; }
+
+/* Контейнер списка (теперь просто обёртка без фона) */
+.tasks-list-container {
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+}
+
+/* Список задач — с отступами между карточками */
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* Карточка задачи */
+.task-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: rgba(239, 242, 235, 0.5); /* Полупрозрачный зелёный (--secondary) */
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.task-card:hover {
+    background: rgba(239, 242, 235, 0.8);
+    transform: translateX(4px);
+}
+
+.task-card.completed {
+    background: rgba(239, 242, 235, 0.5);/* Светлее для выполненных */
+}
+
+.task-card.completed .task-name {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+
+.task-checkbox {
+    width: 20px; height: 20px; border: 2px solid var(--border);
+    border-radius: 6px; cursor: pointer; flex-shrink: 0; transition: all 0.2s;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.task-checkbox.checked {
+    background: var(--primary); border-color: var(--primary); position: relative;
+}
+
+.task-checkbox.checked::after {
+    content: '✓'; color: white; font-size: 12px;
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+
+.task-name { flex: 1; font-size: 15px; color: var(--text-primary); font-weight: 500; }
+
+.task-date {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--text-secondary); flex-shrink: 0;
+}
+
+.date-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* Пагинация */
+.pagination {
+    display: flex; justify-content: center; align-items: center; gap: 8px;
+    margin: 32px 0 24px;
+}
+
+.page-btn {
+    width: 40px; height: 40px; border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.8); border-radius: 10px;
+    font-size: 14px; font-weight: 500; color: var(--text-secondary);
+    cursor: pointer; transition: all 0.2s;
+}
+
+.page-btn:hover:not(:disabled) {
+    background: var(--primary); color: white; border-color: var(--primary);
+    transform: translateY(-2px); box-shadow: 0 4px 12px rgba(234, 126, 93, 0.3);
+}
+
+.page-btn.active {
+    background: var(--primary); color: white; border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(234, 126, 93, 0.3);
+}
+
+.page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* Пустое состояние */
+.tasks-empty {
+    text-align: center; padding: 80px 20px;
+    background: rgba(239, 242, 235, 0.5); border-radius: 16px;
+    margin-bottom: 60px;
+}
+
+.tasks-empty svg { stroke: var(--text-secondary); opacity: 0.5; margin-bottom: 16px; }
+.tasks-empty h3 { font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+.tasks-empty p { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; }
+
+/* Адаптив */
+@media (max-width: 768px) {
+    .tasks-page-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .tasks-filters { flex-wrap: wrap; }
+    .task-card { flex-wrap: wrap; }
+    .task-name { order: 3; width: 100%; margin-top: 8px; }
 }
