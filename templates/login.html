@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dotodo — Вход</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body class="login-page">
@@ -17,9 +17,9 @@
                 <a href="#" class="logo-text">Dotodo</a>
                 <div class="auth-buttons">
                     <!-- Ссылка на страницу входа -->
-                    <a href="login.html" class="btn btn-outline">Войти</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline">Войти</a>
                     <!-- Ссылка на страницу регистрации -->
-                    <a href="register.html" class="btn btn-primary">Регистрация</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-primary">Регистрация</a>
                 </div>
             </div>
         </header>
@@ -34,9 +34,9 @@
                 <!-- Табы: теперь это ссылки -->
                 <div class="auth-tabs">
                     <!-- Ссылка на текущую страницу (Вход) -->
-                    <a href="login.html" class="tab-btn active">Вход</a>
+                    <a href="{{ url_for('login') }}" class="tab-btn active">Вход</a>
                     <!-- Ссылка на страницу регистрации -->
-                    <a href="register.html" class="tab-btn">Регистрация</a>
+                    <a href="{{ url_for('register') }}"class="tab-btn">Регистрация</a>
                 </div>
 
                 <!-- Форма -->
@@ -59,7 +59,7 @@
                 </form>
 
                 <p class="auth-footer">
-                    Нет аккаунта? <a href="register.html">Зарегистрироваться</a>
+                    Нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрироваться</a>
                 </p>
 
             </div>
@@ -80,6 +80,6 @@
         </footer>
 
     </div>
-    <script src="charts.js"></script>
+    <script src="{{ url_for('static', filename='charts.js') }}"></script>
 </body>
 </html>

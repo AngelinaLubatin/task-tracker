@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from datetime import datetime
 from dotenv import load_dotenv
-
+import os
 from models import db, User, Task
 
 
@@ -86,6 +86,20 @@ def register():
         return redirect(url_for('login'))
     
     return render_template('register.html')
+
+@app.route('/tasks')
+@login_required  # если нужна авторизация
+def tasks():
+    return render_template('tasks.html')  
+@app.route('/stats')
+@login_required
+def stats():
+    return render_template('stats.html')
+
+@app.route('/calendar')
+@login_required
+def calendar():
+    return render_template('calendar.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
