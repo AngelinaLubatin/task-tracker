@@ -12,20 +12,25 @@
     <!-- Общий фон страницы -->
     <div class="page-wrapper">
 
-        <!-- HEADER — точно как в Figma (1440x80, padding 120x20, gap 872, фон --background, граница Border) -->
+        
         <header class="header">
             <div class="header-content">
-                <a href="#" class="logo-text">Dotodo</a>
+                <a href="{{ url_for('index') }}" class="logo-text">Dotodo</a>
                 <div class="auth-buttons">
-                    <!-- Ссылка на страницу входа -->
-                    <a href="{{ url_for('login') }}" class="btn btn-outline">Войти</a>
-                    <!-- Ссылка на страницу регистрации -->
-                    <a href="{{ url_for('register') }}" class="btn btn-primary">Регистрация</a>
+            {% if current_user.is_authenticated %}
+                <!--  АВТОРИЗОВАН: имя + выход -->
+                <span class="user-badge"> {{ current_user.name or current_user.email }}</span>
+                <a href="{{ url_for('tasks') }}" class="btn btn-secondary">Мои задачи</a>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline">Выйти</a>
+            {% else %}
+                <!--  ГОСТЬ: вход + регистрация -->
+                <a href="{{ url_for('login') }}" class="btn btn-outline">Войти</a>
+                <a href="{{ url_for('register') }}" class="btn btn-primary">Регистрация</a>
+            {% endif %}
                 </div>
             </div>
         </header>
 
-        <!-- HERO ФРЕЙМ — точно как в Figma (800x279, #EFF2EB 50%, radius 16) -->
         <section class="hero-frame">
             <div class="hero-content">
                 <h1 class="hero-title">Dotodo — to-do, to-do!</h1>
@@ -35,7 +40,6 @@
             </div>
         </section>
 
-        <!-- FEATURES ФРЕЙМ — точно как в Figma (1440x312, #EFF2EB 50%, radius 0) -->
         <section class="features-frame">
             <div class="container">
                 <h2 class="section-title">Всё, что нужно для порядка</h2>
@@ -66,7 +70,6 @@
             </div>
         </section>
 
-        <!-- FOOTER — точно как в Figma (1440x120, #EFF2EB 50%, spacing 727) -->
         <footer class="footer">
             <div class="footer-content">
                 <div class="footer-left">

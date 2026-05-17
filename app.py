@@ -48,12 +48,13 @@ def register():
         return redirect(url_for('index'))
     
     if request.method == 'POST':
-        email = request.form.get('email')
+        name = request.form.get('name', '').strip()
+        email = request.form.get('email', '').strip().lower()
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
         
         # Валидация
-        if not email or not password:
+        if not name or not email or not password:
             flash('Заполните все поля', 'danger')
             return render_template('register.html')
         
@@ -65,30 +66,35 @@ def register():
             flash('Пароль должен быть минимум 6 символов', 'danger')
             return render_template('register.html')
         
-        # Проверяем, существует ли пользователь
+        #  Проверка на дубликат email
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             flash('Пользователь с таким email уже существует', 'danger')
             return render_template('register.html')
         
-        # Создаём нового пользователя
-        new_user = User(email=email)
+        # Создаём пользователя с name + email
+        new_user = User(name=name, email=email)
         new_user.set_password(password)
         
-        # Первый пользователь будет админом
+        # Первый пользователь — админ
         if User.query.count() == 0:
             new_user.role = 'администратор'
         
-        db.session.add(new_user)
-        db.session.commit()
-        
-        flash('Регистрация успешна! Теперь войдите в систему.', 'success')
-        return redirect(url_for('login'))
+        #  Безопасное сохранение в БД
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Регистрация успешна! Теперь войдите в систему.', 'success')
+            return redirect(url_for('login'))
+        except Exception as e:
+            db.session.rollback()  # 🔁 Откат при ошибке
+            app.logger.error(f"Registration error: {e}")
+            flash('Ошибка при регистрации. Попробуйте ещё раз.', 'danger')
+            return render_template('register.html')
     
     return render_template('register.html')
-
 @app.route('/tasks')
-@login_required  # если нужна авторизация
+@login_required
 def tasks():
     return render_template('tasks.html')  
 @app.route('/stats')

@@ -59,19 +59,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===== ЧЕКБОКСЫ (универсальные для дашборда и задач) =====
+    // ===== ЧЕКБОКСЫ =====
     const allCheckboxes = document.querySelectorAll('.task-checkbox');
     allCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('click', function() {
             this.classList.toggle('checked');
-            
-            // Пробуем найти .task-card (для страницы задач), иначе .task-item (для дашборда)
             const taskCard = this.closest('.task-card');
-            const taskItem = this.closest('.task-item');
-            const taskElement = taskCard || taskItem;
-            
-            if (taskElement) {
-                taskElement.classList.toggle('completed');
+            if (taskCard) {
+                taskCard.classList.toggle('completed');
+                // После переключения — сразу применяем фильтры, если они активны
+                if (document.querySelector('.filter-btn.active')?.dataset.filter !== 'all') {
+                    applyFiltersAndSearch();
+                }
             }
         });
     });
@@ -116,57 +115,73 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ===== СТРАНИЦА ЗАДАЧ (только если мы на tasks.html) =====
-    if (currentPage === 'tasks.html') {
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const taskSearch = document.getElementById('taskSearch');
+    const taskCards = document.querySelectorAll('.task-card');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const taskSearch = document.getElementById('taskSearch');
 
-        // Фильтры
+    if (taskCards.length > 0) {  // Если есть карточки задач — запускаем логику
+        
+        // --- ФИЛЬТРЫ ---
         if (filterBtns.length) {
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
                     filterBtns.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
-                    filterTasks(this.dataset.filter);
+                    applyFiltersAndSearch();  // Единая функция для фильтра + поиска
                 });
             });
         }
 
-        function filterTasks(filter) {
-            // Ищем .task-card вместо .task-item
-            const tasks = document.querySelectorAll('.task-list .task-card');
-            tasks.forEach(task => {
-                const checkbox = task.querySelector('.task-checkbox');
-                const isChecked = checkbox?.classList.contains('checked');
-                
-                switch(filter) {
-                    case 'active':
-                        task.style.display = isChecked ? 'none' : 'flex';
-                        break;
-                    case 'completed':
-                        task.style.display = isChecked ? 'flex' : 'none';
-                        break;
-                    case 'urgent':
-                        task.style.display = 'flex';
-                        break;
-                    default:
-                        task.style.display = 'flex';
-                }
-            });
-        }
-
-        // Поиск
+        // --- ПОИСК ---
         if (taskSearch) {
-            taskSearch.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                // Ищем .task-card вместо .task-item
-                const tasks = document.querySelectorAll('.task-list .task-card');
-                
-                tasks.forEach(task => {
-                    const taskName = task.querySelector('.task-name')?.textContent.toLowerCase();
-                    task.style.display = taskName?.includes(searchTerm) ? 'flex' : 'none';
-                });
-            });
+            taskSearch.addEventListener('input', applyFiltersAndSearch);
         }
+
+        // --- ЕДИНАЯ ФУНКЦИЯ: фильтр + поиск вместе ---
+        function applyFiltersAndSearch() {
+            const activeBtn = document.querySelector('.filter-btn.active');
+            const filterType = activeBtn ? activeBtn.dataset.filter : 'all';
+            const searchTerm = taskSearch ? taskSearch.value.toLowerCase().trim() : '';
+            
+            taskCards.forEach(card => {
+                // Читаем статус из CSS-класса (как у вас в HTML)
+                const isCompleted = card.classList.contains('completed');
+                const taskName = card.querySelector('.task-name')?.textContent.toLowerCase() || '';
+                
+                // Проверка фильтра
+                let matchesFilter = true;
+                if (filterType === 'active') matchesFilter = !isCompleted;
+                else if (filterType === 'completed') matchesFilter = isCompleted;
+                else if (filterType === 'urgent') {
+                    // Срочные: красная точка + не выполнено
+                    const dateDot = card.querySelector('.date-dot');
+                    const isUrgent = dateDot && 
+                        (dateDot.style.background.includes('var(--danger)') || 
+                        dateDot.style.background.includes('#ef4444') ||
+                        dateDot.style.backgroundColor === 'var(--danger)');
+                    matchesFilter = isUrgent && !isCompleted;
+                }
+                
+                // Проверка поиска
+                const matchesSearch = searchTerm === '' || taskName.includes(searchTerm);
+                
+                // Показываем/скрываем
+                card.style.display = (matchesFilter && matchesSearch) ? '' : 'none';
+            });
+            
+            // Показываем "пусто", если ничего не найдено
+            const visible = document.querySelectorAll('.task-card[style!="display: none"]').length;
+            const emptyState = document.getElementById('tasksEmpty');
+            const listContainer = document.getElementById('tasksListAndPagination');
+            if (emptyState && listContainer) {
+                const allHidden = Array.from(taskCards).every(c => c.style.display === 'none');
+                emptyState.style.display = allHidden ? 'block' : 'none';
+                listContainer.style.display = allHidden ? 'none' : 'block';
+            }
+        }
+
+        // Запуск при загрузке
+        applyFiltersAndSearch();
     }
 
     // ===== ГЛОБАЛЬНЫЕ ФУНКЦИИ =====
